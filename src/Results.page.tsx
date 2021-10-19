@@ -1,7 +1,7 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { makeStyles } from '@mui/styles';
 import PatchStyles from 'patch-styles';
-import { ScoreContext } from './score-utils';
+import { useScore, useUpdateScore } from './score-utils';
 import { Link } from 'react-router-dom';
 import { Button, Grow, Typography, Zoom } from '@mui/material';
 
@@ -28,7 +28,8 @@ const useStyles = makeStyles(() => ({
 
 const ResultsPage = () => {
   const classes = useStyles();
-  const [changeScoreBy, score] = useContext(ScoreContext);
+  const score = useScore();
+  const updateScoreBy = useUpdateScore();
 
   return (
     <PatchStyles classNames={classes}>
@@ -42,7 +43,7 @@ const ResultsPage = () => {
                   variant="contained"
                   component={Link}
                   to='/'
-                  onClick={() => changeScoreBy(-score)}
+                  onClick={() => updateScoreBy(-score)}
                 >
                   To Home Page
                 </Button>

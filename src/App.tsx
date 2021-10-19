@@ -1,25 +1,19 @@
-import React, { useState } from 'react';
+import React, { FC } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import HomePage from './Home.page';
 import TestsPage from './Tests.page';
 import ResultsPage from './Results.page';
-import { ScoreContext } from './score-utils';
+import { ScoreProvider } from './score-utils';
 
-const App = () => {
-  const [score, updateScore] = useState(0);
-
-  const handleQuestionAnswer = (updateBy: number) => {
-    updateScore((score) => score + updateBy);
-  };
-
+const App: FC = () => {
   return (
-    <ScoreContext.Provider value={[handleQuestionAnswer, score]}>
+    <ScoreProvider>
       <Switch>
         <Route component={HomePage} path="/" exact />
         <Route component={TestsPage} path="/tests" />
         <Route component={ResultsPage} path="/results" />
       </Switch>
-    </ScoreContext.Provider>
+    </ScoreProvider>
   );
 };
 

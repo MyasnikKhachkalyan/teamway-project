@@ -1,9 +1,9 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@mui/styles';
 import PatchStyles from 'patch-styles';
 import axios from 'axios';
 import { Button, Fade, Paper, Typography } from '@mui/material';
-import { ScoreContext } from './score-utils';
+import { useUpdateScore } from './score-utils';
 import { Link } from 'react-router-dom';
 
 interface TestQuestionAnswer {
@@ -49,7 +49,7 @@ const useStyles = makeStyles(() => ({
 
 const TestsPage = () => {
   const classes = useStyles();
-  const [onAnswer] = useContext(ScoreContext);
+  const updateScoreBy = useUpdateScore();
   const [testQuestions, setTestQuestions] = useState<TestQuestion[]>([]);
   const [qIndex, setQIndex] = useState(0);
 
@@ -59,7 +59,7 @@ const TestsPage = () => {
 
   const handleAnswer = (score: number) => {
     setQIndex((i) => i + 1);
-    onAnswer(score);
+    updateScoreBy(score);
   };
 
   return (
