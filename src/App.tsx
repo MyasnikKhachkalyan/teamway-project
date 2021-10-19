@@ -1,26 +1,26 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import { Route, Switch } from 'react-router-dom';
+import HomePage from './Home.page';
+import TestsPage from './Tests.page';
+import ResultsPage from './Results.page';
+import { ScoreContext } from './score-utils';
 
-function App() {
+const App = () => {
+  const [score, updateScore] = useState(0);
+
+  const handleQuestionAnswer = (updateBy: number) => {
+    updateScore((score) => score + updateBy);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ScoreContext.Provider value={[handleQuestionAnswer, score]}>
+      <Switch>
+        <Route component={HomePage} path="/" exact />
+        <Route component={TestsPage} path="/tests" />
+        <Route component={ResultsPage} path="/results" />
+      </Switch>
+    </ScoreContext.Provider>
   );
-}
+};
 
 export default App;
